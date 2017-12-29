@@ -1,0 +1,87 @@
+/*
+Protocol Buffer Test Case Definitions.
+
+It's used to test the protocol buffer serialization and deserialization in the python test cases.
+It should contain examples of all the types of fields that can be used in a protocol buffer message,
+including nested messages and repeated fields, as well as examples from the common well-known types
+produced by google that can be imported from the google.protobuf package, suh as Timestamp, Duration, and Struct.
+
+*/
+
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/duration.proto";
+import "google/protobuf/struct.proto";
+
+package tests.unittests;
+
+
+
+message TestInts{
+  int32 int32_single = 1;
+  repeated int32 int32_repeated = 2;
+  int64 int64_single = 3;
+  repeated int64 int64_repeated = 4;
+}
+
+message TestUnsignedInts {
+  uint32 uint32_single = 1;
+  repeated uint32 uint32_repeated = 2;
+  uint64 uint64_single = 3;
+  repeated uint64 uint64_repeated = 4;
+}
+
+message TestSignedInts {
+  sint32 sint32_single = 1;
+  repeated sint32 sint32_repeated = 2;
+  sint64 sint64_single = 3;
+  repeated sint64 sint64_repeated = 4;
+}
+
+message TestFixedInts {
+  fixed32 fixed32_single = 1;
+  repeated fixed32 fixed32_repeated = 2;
+  fixed64 fixed64_single = 3;
+  repeated fixed64 fixed64_repeated = 4;
+}
+
+message TestSignedFixedInts {
+  sfixed32 sfixed32_single = 1;
+  repeated sfixed32 sfixed32_repeated = 2;
+  sfixed64 sfixed64_single = 3;
+  repeated sfixed64 sfixed64_repeated = 4;
+}
+
+message TestFloats {
+  float float_single = 1;
+  repeated float float_repeated = 2;
+  double double_single = 3;
+  repeated double double_repeated = 4;
+}
+
+message TestBools {
+  bool bool_single = 1;
+  repeated bool bool_repeated = 2;
+}
+
+message TestStrings {
+  string string_single = 1;
+  repeated string string_repeated = 2;
+}
+
+message TestBytes {
+  bytes bytes_single = 1;
+  repeated bytes bytes_repeated = 2;
+}
+
+message TestEnums {
+  enum Enum {
+    ENUM1 = 0;
+    ENUM2 = 1;
+    ENUM3 = 2;
+  }
+  Enum enum_single = 1;
+  repeated Enum enum_repeated = 2;
+}
+

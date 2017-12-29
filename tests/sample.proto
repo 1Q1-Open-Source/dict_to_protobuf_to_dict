@@ -1,5 +1,13 @@
 syntax = "proto3";
 
+
+import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+
 message MainMessage {
     string a_str = 1;
     map<int32, ListOfIntsMessage> int_to_lst_ints_map = 2;
@@ -24,3 +32,15 @@ enum SomeEnum {
 message ListOfIntsMessage {
     repeated int32 lst_ints = 1;
 }
+
+// Test a message containing a list of a messages which in turn contain a string and a struct.
+message MessageWithListOfMessages {
+    repeated SomeSubMessage lst_messages = 1;
+
+    // a message containing a string and a struct.
+    message SomeSubMessage{
+        string a_str = 1;
+        google.protobuf.Struct a_struct = 2;
+    }
+}
+

@@ -5,7 +5,7 @@ import os
 
 # Using the cpp implemenation to speed up proto processing. Though the api_implementation
 # module defaults it to cpp, so we can safely comment out the next line of code.
-os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "cpp"
+# os.environ["PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION"] = "cpp"
 
 from google.protobuf.descriptor import FieldDescriptor
 
@@ -17,17 +17,17 @@ FIELD_CAST_MAP = {
     FieldDescriptor.TYPE_DOUBLE: float,
     FieldDescriptor.TYPE_ENUM: int,
     FieldDescriptor.TYPE_FIXED32: int,
-    FieldDescriptor.TYPE_FIXED64: long,
+    FieldDescriptor.TYPE_FIXED64: int,
     FieldDescriptor.TYPE_FLOAT: float,
     FieldDescriptor.TYPE_INT32: int,
-    FieldDescriptor.TYPE_INT64: long,
+    FieldDescriptor.TYPE_INT64: int,
     FieldDescriptor.TYPE_SFIXED32: int,
-    FieldDescriptor.TYPE_SFIXED64: long,
+    FieldDescriptor.TYPE_SFIXED64: int,
     FieldDescriptor.TYPE_SINT32: int,
-    FieldDescriptor.TYPE_SINT64: long,
-    FieldDescriptor.TYPE_STRING: unicode,
+    FieldDescriptor.TYPE_SINT64: int,
+    FieldDescriptor.TYPE_STRING: str,
     FieldDescriptor.TYPE_UINT32: int,
-    FieldDescriptor.TYPE_UINT64: long
+    FieldDescriptor.TYPE_UINT64: int
 }
 
 FIELD_DEFAULT_VALS = {
@@ -68,19 +68,19 @@ def _handle_repeated(values, message, field):
                 _dict_to_protobuf(cmd, val)
         elif field.type == FieldDescriptor.TYPE_ENUM:
             for val in values:
-                if instance(val, basestring):
+                if isinstance(val, str):
                     message.append(_get_constant_from_enum_label(field, val))
                 else:
                     raise ValueError("""label %s passed to enum %s is of type %s """
-                        """not string/unicode""", val, feild.name, type(val))
+                        """not string/unicode""", val, field.name, type(val))
         else:
             message.extend(values)
 
 def _is_type_scalar(val):
     """
-    Check if the value type is scalar, (int, basestring, long, float)
+    Check if the value type is scalar, (int, str, float)
     """
-    return isinstance(val, (basestring, int, long, float))
+    return isinstance(val, (str, int, float))
 
 def _dict_to_protobuf(values, message):
     """
@@ -111,7 +111,7 @@ def _dict_to_protobuf(values, message):
             elif field.label == FieldDescriptor.LABEL_REPEATED:
                 _handle_repeated(value, getattr(message, key), field)
             else:
-                if field.type == FieldDescriptor.TYPE_ENUM and isinstance(value, basestring):
+                if field.type == FieldDescriptor.TYPE_ENUM and isinstance(value, str):
                     value = _get_constant_from_enum_label(field, value)
                 elif field.type in FIELD_CAST_MAP:
                     value = FIELD_CAST_MAP[field.type](value)

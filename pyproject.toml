@@ -1,0 +1,24 @@
+[tool.poetry]
+name = "dict-to-protobuf-to-dict"
+version = "0.1.0"
+description = "A python helper library to create a proto object from a dict and also the other way round, i.e, a dict from a proto object. Works against proto3 and handles Maps and filling up of default values in the dict created."
+authors = [
+    "neerajkoulgoibibo <neeraj.koul@goibibo.com>",
+    "Samuel Bishop <sam@techdragon.io>"
+]
+license = "The Unlicense"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.8"
+protobuf = ">3"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.2"
+hypothesis = {version = "^6.98.17", extras = ["dpcontracts", "pytz"]}
+grpcio-tools = "^1.62.0"
+coverage = "^7.4.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
